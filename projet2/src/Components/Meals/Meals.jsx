@@ -1,13 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useQuery } from "react-query";
+import React, { useState } from "react";
+import { useQuery, useNavigate } from "react-query";
 import { useParams } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import Collapse from 'react-bootstrap/Collapse';
+import Accordion from 'react-bootstrap/Accordion';
 
 function Meals() {
-  // Déstructurez l'ID à l'intérieur de la fonction
-  const { id } = useParams();
+  const { id } = useParams(); //Utilisation de useParams
+  const navigate = useNavigate(); // Utilisation de useNavigate 
 
-  // Requête avec React Query
   const {
     isLoading,
     isError,
@@ -20,6 +21,9 @@ function Meals() {
     return data.meals ? data.meals[0] : null;
   });
 
+  const [ingredientsOpen, setIngredientsOpen] = useState(false);
+  const [instructionsOpen, setInstructionsOpen] = useState(false);
+
   if (isLoading) {
     return <div>Loading...</div>
   }
@@ -29,34 +33,61 @@ function Meals() {
   }
 
   if (!mealDetails) {
-    return <div>Les détails de la recette n'ont pas été trouvés.</div>
+    return <div>The details of the recipes were not found.</div>
+  }
+
+  const toggleIngredients = () => {
+    setIngredientsOpen(!ingredientsOpen);
+  }
+
+  const toggleInstructions = () => {
+    setInstructionsOpen(!instructionsOpen);
   }
 
   return (
     <div>
+      <button onClick={() => navigate(`/categories/${mealDetails.strCategory}`)}>Back To Category Recipes</button>
       <h1>{mealDetails.strMeal}</h1>
-      <p>Catégorie : {mealDetails.strCategory}</p>
+      <p>Category : {mealDetails.strCategory}</p>
       {mealDetails.strMealThumb && (
         <img src={mealDetails.strMealThumb} alt={mealDetails.strMeal} />
       )}
-      <h2>Ingrédients :</h2>
-      <ul>
-        {Array.from({ length: 20 }, (_, i) => i + 1).map((ingredientIndex) => {
-          const ingredient = mealDetails[`strIngredient${ingredientIndex}`];
-          const measure = mealDetails[`strMeasure${ingredientIndex}`];
+      <h2>Ingredients :</h2>
+      <Collapse in={ingredientsOpen}>
+        <ul>
+          {Array.from({ length: 20 }, (_, i) => i + 1).map((ingredientIndex) => {
+            const ingredient = mealDetails[`strIngredient${ingredientIndex}`];
+            const measure = mealDetails[`strMeasure${ingredientIndex}`];
 
-          if (ingredient && ingredient.trim() !== "") {
-            return (
-              <li key={ingredientIndex}>
-                {ingredient} : {measure}
-              </li>
-            );
-          }
-          return null;
-        })}
-      </ul>
+            if (ingredient && ingredient.trim() !== "") {
+              return (
+                <li key={ingredientIndex}>
+                  {ingredient} : {measure}
+                </li>
+              );
+            }
+            return null;
+          })}
+        </ul>
+      </Collapse>
+      <Button onClick={toggleIngredients}>
+        {ingredientsOpen ? "Hide Ingredients" : "Show Ingredients"}
+      </Button>
       <h2>Instructions :</h2>
-      <p>{mealDetails.strInstructions}</p>
+      <Accordion>
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>
+            {instructionsOpen ? "Hide Instructions" : "Show Instructions"}
+          </Accordion.Header>
+          <Accordion.Body>
+            <p>{mealDetails.strInstructions}</p>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+      <Button onClick={toggleInstructions}>
+        {instructionsOpen ? "Hide Instructions" : "Show Instructions"}
+      </Button>
+      
     </div>
   );
 }

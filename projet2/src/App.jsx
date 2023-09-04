@@ -1,30 +1,28 @@
-
 import { Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Meals from "./Components/Meals/Meals";
 import Home from "./Components/Home/home";
+import CategoryRecipes from "./Components/CategoryRecipes/CategoryRecipes"; // Importez CategoryRecipes
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 
-
 const queryClient = new QueryClient();
 
 function App () {
-return (
-
-  <QueryClientProvider client={new QueryClient()}>
-    <Routes>
-      <Route path='/meals/:id' element={<Meals />} />
-      <Route path='/' element={<Home />} />
-    </Routes>
-  </QueryClientProvider>
-
-)
-
+  return (
+    <QueryClientProvider client={new QueryClient()}>
+      <Routes> {/* Declaration des routes selon la grille de correction */}
+        <Route path="/categories/:categoryName" element={<CategoryRecipes />} />
+        <Route path='/meals/:id' element={<Meals />} />
+        <Route path='/' element={<Home />} />
+      </Routes>
+    </QueryClientProvider>
+  )
 }
 
 export default App;
+
 
 
 

@@ -18,16 +18,16 @@ function Categories() {
   );
 
   if (isLoading) {
-    return <div>Chargement en cours...</div>;
+    return <div>Loading...</div>;
   }
 
   if (isError) {
-    return <div>Erreur lors du chargement des catégories.</div>;
+    return <div>Error.</div>;
   }
 
   return (
     <Container>
-      <h1>Toutes les catégories de recettes</h1>
+      <h1>All the Recipes of The Category</h1>
       <Row>
         {categories.map((category) => (
           <Col key={category.idCategory} md={4}>
@@ -35,7 +35,7 @@ function Categories() {
               <h3>{category.strCategory}</h3>
               <p>{category.strCategoryDescription}</p>
               <Link to={`/categories/${category.strCategory}`}>
-                Voir les recettes
+                See Recipes
               </Link>
             </div>
           </Col>
