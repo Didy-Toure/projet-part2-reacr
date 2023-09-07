@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
-import { useMeals } from "../Services/servicesrecipes.jsx";
+import { useMeals } from "../Services/usemeals.jsx";
 
 function Home() {
   const { data: categories, isLoading, isError } = useMeals();

@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { useParams, Link } from "react-router-dom";
-import { CategoryRecipes } from "../Services/servicesrecipes.jsx";
+import { CategoryRecipes } from "../Services/categorynameservice.jsx";
 
 function CategoryRecipesComponent() {
   const { categoryName } = useParams();
