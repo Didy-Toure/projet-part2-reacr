@@ -4,6 +4,14 @@ import { useParams, Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import { MealsById } from "../Services/servicesrecipes.jsx";
+import Ajout from "../Actions/Ajout.jsx";
+import Enlever from "../Actions/Enlever.jsx";
+import { isRecipeInFavorites } from '../../store-actions/favoris';
+
+
+
+
+
 
 function Meals() {
   const { id } = useParams();
@@ -73,6 +81,17 @@ function Meals() {
       <Collapse in={instructionsOpen}>
         <p>{mealDetails.strInstructions}</p>
       </Collapse>
+      <div>
+        {/*Recette mis en favoris ou enlever des favoris */}
+        {isRecipeInFavorites(mealDetails.idMeal) ? 
+        (
+          <Enlever id={mealDetails.idMeal} />
+        ) : (
+          <Ajout id={mealDetails.idMeal} />
+        )}
+
+ 
+      </div>
     </div>
   );
 }

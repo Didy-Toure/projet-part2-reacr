@@ -5,7 +5,9 @@ import Home from "./Components/Home/home";
 import CategoryRecipes from "./Components/CategoryRecipes/CategoryRecipes"; // Importez CategoryRecipes
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import FavorisList from "./FavorisList"
 import Button from 'react-bootstrap/Button';
+
 
 const queryClient = new QueryClient();
 
@@ -16,6 +18,7 @@ function App () {
         <Route path="/categories/:categoryName" element={<CategoryRecipes />} />
         <Route path='/meals/:id' element={<Meals />} />
         <Route path='/' element={<Home />} />
+        <Route path="/favoris" element={<FavorisList />} />
         
       </Routes>
     </QueryClientProvider>
