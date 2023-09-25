@@ -1,8 +1,17 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {Link} from 'react-router-dom';
+import { removeFavorite } from "./FavoritesReducer";
+import { Button } from "react-bootstrap";
+
 
 const FavorisList = () => {
-  const favoris = useSelector((state) => state.favoris);
+  const favoris = useSelector((state) => state.favorites);
+  const dispatch = useDispatch();
+
+    const handleRemoveFavorite = (recipeId) => {
+        dispatch(removeFavorite(recipeId));
+    };
 
   return (
     <div>
@@ -10,8 +19,11 @@ const FavorisList = () => {
       <ul>
         {favoris.map((recipeId) => (
           <li key={recipeId}>
-            {/* Vous pouvez créer des liens vers les détails de chaque recette en favoris */}
-            <a href={`/favoris/${recipeId}`}>Voir les détails</a>
+            {/* */}
+            <Button>
+            <Link to={`/favoris/${recipeId}`}>Voir les détails</Link>
+
+            </Button>
           </li>
         ))}
       </ul>

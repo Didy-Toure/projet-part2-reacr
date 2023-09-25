@@ -5,12 +5,8 @@ import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import { MealsById } from "../Services/servicesrecipes.jsx";
 import Ajout from "../Actions/Ajout.jsx";
-import Enlever from "../Actions/Enlever.jsx";
-import { isRecipeInFavorites } from '../../store-actions/favoris';
-
-
-
-
+import { isRecipeInFavorites } from '../../store-actions/favoris.jsx';
+import { useSelector } from 'react-redux'; 
 
 
 function Meals() {
@@ -24,6 +20,21 @@ function Meals() {
 
   const [ingredientsOpen, setIngredientsOpen] = useState(false);
   const [instructionsOpen, setInstructionsOpen] = useState(false);
+
+ // la liste des favoris depuis le state Redux
+ const favoris = useSelector((state) => state.favorites);
+
+const isRecipeInFavoritesFlag = favoris ? isRecipeInFavorites(id, favoris) : false;
+
+const toggleFavorite = () => {
+  setIngredientsOpen(!ingredientsOpen);
+};
+
+
+  /*console.log("isLoading:", isLoading); // jessaie de me debogger 
+  console.log("isError:", isError);
+  console.log("mealDetails:", mealDetails);
+  console.log("favoris:", favoris);*/
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -81,17 +92,67 @@ function Meals() {
       <Collapse in={instructionsOpen}>
         <p>{mealDetails.strInstructions}</p>
       </Collapse>
-      <div>
-        {/*Recette mis en favoris ou enlever des favoris */}
-        {isRecipeInFavorites(mealDetails.idMeal) ? 
-        (
-          <Enlever id={mealDetails.idMeal} />
-        ) : (
-          <Ajout id={mealDetails.idMeal} />
-        )}
+      
+      {/* Ajouter le bouton Ajout vers la page ajout.jsx */}
+      <Button>
+      <Link to={`/ajout/${mealDetails.idMeal}`}>Ajouter</Link>
+      </Button>
 
- 
-      </div>
+      
+
+     
+
+      
+     
+     
+      
+
+
+    
+
+      
+      
+
+
+
+
+
+      {/* Ajouter le bouton Enlever */}
+      <Button>
+      <Link to={`/enlever/${mealDetails.idMeal}`}>Enlever</Link>
+      </Button>
+      
+
+
+
+      
+      
+      
+      
+      
+
+
+
+      {/* Ajouter le Voir la liste des favoris */}
+      <Button>
+      <Link to={`/favoris`}>Voir la liste des favoris</Link>
+      </Button>
+      
+
+
+
+
+
+      
+
+      
+
+
+
+
+        
+      
+      
     </div>
   );
 }

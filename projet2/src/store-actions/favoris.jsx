@@ -1,11 +1,11 @@
-export const addFavoris = (recipeId) => {
+export const addFavorite = (recipeId) => {
     return {
         type: 'ADD_FAVORIS',
         payload: recipeId,
     };
 }
 
-export const removeFavoris = (recipeId) => {
+export const removeFavorite = (recipeId) => {
     return {
         type: 'REMOVE_FAVORIS',
         payload: recipeId,
@@ -14,9 +14,7 @@ export const removeFavoris = (recipeId) => {
 
 //la fonction pour verifier que la recette est dans les favoris
 
-export const isRecipeInFavorites = (recipeId) => {
-    (recipeId,favorites) => {
-        return favorites.includes(recipeId);
-    }   
+export const isRecipeInFavorites = (recipeId, favorites) => {
+    return favorites.includes(recipeId);
 }
 

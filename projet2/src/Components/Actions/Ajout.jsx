@@ -1,36 +1,31 @@
+import React from 'react';
 import { connect } from 'react-redux';
-import { addFavoris, removeFavoris } from '../../store-actions/favoris';
+import { addFavorite, removeFavorite, isRecipeInFavorites } from '../../store-actions/favoris.jsx';
 
-const Ajout = ({ addFavoris, removeFavoris, id, favoris }) => {
-  const isRecipeInFavorites = favoris.includes(id);
+
+const Ajout = ({ id, favoris, addFavorite, removeFavorite }) => {
+  const isRecipeInFavoritesFlag = isRecipeInFavorites(id, favoris);
 
   const handleToggleFavorite = () => {
-    if (isRecipeInFavorites) {
-      // Si la recette est dans les favoris, la supprimer
-      removeFavoris(id);
+    if (isRecipeInFavoritesFlag) {
+      removeFavorite(id);
     } else {
-      // Sinon, l'ajouter aux favoris
-      addFavoris(id);
+      addFavorite(id);
     }
   };
 
   return (
     <div>
       <button onClick={handleToggleFavorite}>
-        {isRecipeInFavorites ? 'Enlever des favoris' : 'Ajouter aux favoris'}
+        {isRecipeInFavoritesFlag ? 'Enlever des favoris' : 'Ajouter aux favoris'}
       </button>
     </div>
   );
 };
 
+
 const mapStateToProps = (state) => ({
-  favoris: state.favoris, // Assurez-vous que le nom "favoris" correspond à votre slice de favoris
+  favoris: state.favoris,
 });
 
-export default connect(mapStateToProps, { addFavoris, removeFavoris })(Ajout);
-
-
-
-
-
-
+export default connect(mapStateToProps, { addFavorite, removeFavorite })(Ajout);

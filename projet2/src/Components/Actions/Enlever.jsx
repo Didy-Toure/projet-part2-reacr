@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
-import { removeFavoris } from '../../store-actions/favoris';
+import React from 'react';
+import { removeFavorite } from './FavoritesReducer';
+
 
 const mapDispatchToProps = {
-    removeFavoris: removeFavoris, // Utilisez une clé "removeFavoris" pour définir l'action.
+    removeFavorite: removeFavorite, 
 };
 
-const Enlever = ({ id, removeFavoris }) => {
+const Enlever = ({ id, removeFavorite }) => {
     const handleRemoveFavoris = () => {
-        removeFavoris(id);
+        removeFavorite(id);
     }
 
     return (
